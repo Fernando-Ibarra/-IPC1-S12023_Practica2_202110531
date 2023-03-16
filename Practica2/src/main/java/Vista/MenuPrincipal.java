@@ -4,12 +4,23 @@
  */
 package Vista;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author fi944
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-
+    
+    public int timeStorage = 0;
+    public double valueStorage = 0;
+    public int timeProduction = 0;
+    public double valueProduction = 0;
+    public int timePackaging = 0;
+    public double valuePackaging = 0;
+    public int timeLeaving = 0;
+    public double valueLeaving = 0;
+    
     /**
      * Creates new form MenuPrincipal
      */
@@ -95,6 +106,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton1.setText("SIMULACIÓN");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -176,6 +192,28 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Asignación de valores
+        timeStorage = Integer.parseInt(jTextField1.getText());
+        valueStorage = Integer.parseInt(jTextField2.getText());
+        timeProduction = Integer.parseInt(jTextField3.getText());
+        valueProduction = Integer.parseInt(jTextField4.getText());
+        timePackaging = Integer.parseInt(jTextField5.getText());
+        valuePackaging = Integer.parseInt(jTextField6.getText());
+        timeLeaving = Integer.parseInt(jTextField7.getText());
+        valueLeaving = Integer.parseInt(jTextField8.getText());
+        
+        // Validación de que todos sean enteros mayores a cero
+        if(timeStorage>0 && valueStorage>0 && timeProduction>0 && valueProduction>0 && timePackaging>0 && valuePackaging>0 && timeLeaving>0 && valueLeaving>0){
+            Simulation sim = new Simulation();
+            sim.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "TODOS LOS CAMPOS DEBEN TENER UN VALOR MAYOR A 0");
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

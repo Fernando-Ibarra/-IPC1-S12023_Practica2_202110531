@@ -3,7 +3,7 @@
  */
 
 package com.mycompany.practica2;
-
+import Vista.MenuPrincipal;
 /**
  *
  * @author fi944
@@ -11,6 +11,7 @@ package com.mycompany.practica2;
 public class Practica2 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        MenuPrincipal mp = new MenuPrincipal();
+        mp.setVisible(true);
     }
 }
