@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
+    public static Time miHilo;
+    public static Simu sm;
     public int timeStorage = 0;
     public double valueStorage = 0;
     public int timeProduction = 0;
@@ -213,8 +215,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         // Validación de que todos sean enteros mayores a cero
         if (timeStorage > 0 && valueStorage > 0 && timeProduction > 0 && valueProduction > 0 && timePackaging > 0 && valuePackaging > 0 && timeLeaving > 0 && valueLeaving > 0) {
-            Time miHilo = new Time();
-            Simu sm = new Simu();
+            miHilo = new Time();
+            sm = new Simu();
             miHilo.start();
             sm.start();
             this.dispose();

@@ -4,6 +4,8 @@
  */
 package Tools;
 
+import static Tools.Simu.desactiveMood;
+
 /**
  *
  * @author fi944
@@ -20,7 +22,7 @@ public class Time extends Thread {
 
     public void run() {
         try {
-            while (true) {
+            while (desactiveMood) {
                 Thread.sleep(4);
                 miles += 4;
                 if (miles == 1000) {
