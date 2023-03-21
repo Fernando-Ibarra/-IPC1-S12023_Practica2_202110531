@@ -24,12 +24,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public double valuePackaging = 0;
     public int timeLeaving = 0;
     public double valueLeaving = 0;
+    public static int cant= 0;
+    public static int pos = 1;
 
     /**
      * Creates new form MenuPrincipal
      */
     public MenuPrincipal() {
         initComponents();
+        
     }
 
     /**
@@ -211,15 +214,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // Validación de que todos sean enteros mayores a cero
         if (timeStorage > 0 && valueStorage > 0 && timeProduction > 0 && valueProduction > 0 && timePackaging > 0 && valuePackaging > 0 && timeLeaving > 0 && valueLeaving > 0) {
             Time miHilo = new Time();
-            Simu miHilo2 = new Simu();
+            Simu sm = new Simu();
             miHilo.start();
-            miHilo2.start();
-            JFrame ventana = new JFrame("Simulación");
-            ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            ventana.setSize(540, 975);
-            Points pon = new Points();
-            ventana.add(pon);
-            ventana.setVisible(true);
+            sm.start();
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "TODOS LOS CAMPOS DEBEN TENER UN VALOR MAYOR A 0");

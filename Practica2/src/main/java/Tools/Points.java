@@ -5,7 +5,7 @@
 package Tools;
 
 import static Tools.Simu.cant;
-import static Tools.Simu.pos;
+import static Vista.MenuPrincipal.pos;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
@@ -29,7 +29,7 @@ public class Points extends JPanel implements Runnable {
     public void paint(Graphics g) {
         super.paint(g);
         // 00
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.RED);
         g.drawRect(0, 0, 100, 100);
 
         // 20
@@ -37,7 +37,7 @@ public class Points extends JPanel implements Runnable {
         g.drawRect(0, 200, 100, 100);
 
         // 40
-        g.setColor(Color.RED);
+        g.setColor(Color.green);
         g.drawRect(0, 400, 100, 100);
 
         // 02
@@ -54,7 +54,7 @@ public class Points extends JPanel implements Runnable {
 
         // 00
         if (0 <= x && x < 200 && y <= 100 && 0 <= y) {
-            g.setColor(Color.YELLOW);
+            g.setColor(Color.RED);
         }
         
         // 02
@@ -79,50 +79,49 @@ public class Points extends JPanel implements Runnable {
         
         // 40
         if (0 <= x && x <= 100 && y <= 500 && 300 < y) {
-            g.setColor(Color.RED);
+            g.setColor(Color.green);
         }
-        g.fillOval(x, y, 5, 5);
+        g.fillOval(x + pos, y + pos, 10, 10);
     }
 
     public void run() {
         try {
             while (true) {
                 // 00
-                Thread.sleep(10);
                 
                 if (0 <= x && x < 200 && y <= 100 && 0 <= y) {
-                    Thread.sleep(10);
                     x += dx;
+                    Thread.sleep(10);
                 }
                 
                 // 02
                 if (200 <= x && x <= 300 && y < 200 && 0 <= y) {
-                    Thread.sleep(10);
                     y += dy;
+                    Thread.sleep(20);
                 }
 
                 // 22
                 if (100 < x && x <= 300 && y < 400 && 200 <= y) {
-                    Thread.sleep(10);
+                    Thread.sleep(30);
                     y += dy;
                 }
 
                 // 42
                 if (99 <= x && x <= 300 && y <= 500 && 400 <= y) {
-                    Thread.sleep(10);
+                    Thread.sleep(40);
                     x -= dx;
                 }
 
                 // 20
                 if (0 <= x && x <=100 && y < 300 && 200 <= y) {
-                    Thread.sleep(10);
+                    Thread.sleep(50);
                     x = x - 1;
                     y = y - 1 ;
                 }
                 
                 // 40
                 if (0 <= x && x <=99 && y <= 500 && 300 <= y){
-                    Thread.sleep(10);
+                    Thread.sleep(60);
                     y -= dy; 
                 }
                 repaint();
