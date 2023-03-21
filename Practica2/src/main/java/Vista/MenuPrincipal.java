@@ -4,6 +4,10 @@
  */
 package Vista;
 
+import Tools.Points;
+import Tools.Simu;
+import Tools.Time;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,7 +15,7 @@ import javax.swing.JOptionPane;
  * @author fi944
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-    
+
     public int timeStorage = 0;
     public double valueStorage = 0;
     public int timeProduction = 0;
@@ -20,7 +24,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public double valuePackaging = 0;
     public int timeLeaving = 0;
     public double valueLeaving = 0;
-    
+
     /**
      * Creates new form MenuPrincipal
      */
@@ -203,16 +207,24 @@ public class MenuPrincipal extends javax.swing.JFrame {
         valuePackaging = Integer.parseInt(jTextField6.getText());
         timeLeaving = Integer.parseInt(jTextField7.getText());
         valueLeaving = Integer.parseInt(jTextField8.getText());
-        
+
         // Validación de que todos sean enteros mayores a cero
-        if(timeStorage>0 && valueStorage>0 && timeProduction>0 && valueProduction>0 && timePackaging>0 && valuePackaging>0 && timeLeaving>0 && valueLeaving>0){
-            Simulation sim = new Simulation();
-            sim.setVisible(true);
+        if (timeStorage > 0 && valueStorage > 0 && timeProduction > 0 && valueProduction > 0 && timePackaging > 0 && valuePackaging > 0 && timeLeaving > 0 && valueLeaving > 0) {
+            Time miHilo = new Time();
+            Simu miHilo2 = new Simu();
+            miHilo.start();
+            miHilo2.start();
+            JFrame ventana = new JFrame("Simulación");
+            ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            ventana.setSize(540, 975);
+            Points pon = new Points();
+            ventana.add(pon);
+            ventana.setVisible(true);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "TODOS LOS CAMPOS DEBEN TENER UN VALOR MAYOR A 0");
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
