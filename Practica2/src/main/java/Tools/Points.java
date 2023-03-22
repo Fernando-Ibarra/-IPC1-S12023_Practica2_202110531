@@ -13,6 +13,8 @@ import static Tools.Simu.cant;
 import static Tools.Simu.desactiveMood;
 import static Tools.Simu.ventana;
 import static Tools.Time.time;
+import static Tools.Utils.makeReport;
+import static Tools.Utils.makeFile;
 import Vista.MenuPrincipal;
 import static Vista.MenuPrincipal.miHilo;
 import static Vista.MenuPrincipal.pos;
@@ -21,12 +23,15 @@ import static Vista.MenuPrincipal.timeLeaving;
 import static Vista.MenuPrincipal.timePackaging;
 import static Vista.MenuPrincipal.timeProduction;
 import static Vista.MenuPrincipal.timeStorage;
+import static Vista.MenuPrincipal.valueLeaving;
+import static Vista.MenuPrincipal.valuePackaging;
+import static Vista.MenuPrincipal.valueProduction;
+import static Vista.MenuPrincipal.valueStorage;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static java.lang.Thread.State.TERMINATED;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -83,8 +88,8 @@ public class Points extends JPanel implements Runnable {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == botonR) {
                     if (!point.isAlive()) {
-                        mp.setVisible(true);
-                        ventana.dispose();
+                        String report = makeReport(timeStorage, valueStorage, timeProduction, valueProduction, timePackaging, valuePackaging, timeLeaving, valueLeaving);
+                        makeFile(report);
                     } else {
                         JOptionPane.showMessageDialog(null, "HILO ACTIVO, ESPERAR A QUE TERMINE.");
                     }
