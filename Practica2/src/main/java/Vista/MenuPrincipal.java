@@ -18,14 +18,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     public static Time miHilo;
     public static Simu sm;
-    public int timeStorage = 0;
-    public double valueStorage = 0;
-    public int timeProduction = 0;
-    public double valueProduction = 0;
-    public int timePackaging = 0;
-    public double valuePackaging = 0;
-    public int timeLeaving = 0;
-    public double valueLeaving = 0;
+    public static int timeStorage = 0;
+    public static double valueStorage = 0;
+    public static int timeProduction = 0;
+    public static double valueProduction = 0;
+    public static int timePackaging = 0;
+    public static double valuePackaging = 0;
+    public static int timeLeaving = 0;
+    public static double valueLeaving = 0;
     public static int cant= 0;
     public static int pos = 1;
 

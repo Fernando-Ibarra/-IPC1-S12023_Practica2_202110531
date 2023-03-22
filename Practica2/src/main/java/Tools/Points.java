@@ -11,16 +11,25 @@ import static Tools.Simu.canPro;
 import static Tools.Simu.canSali;
 import static Tools.Simu.cant;
 import static Tools.Simu.desactiveMood;
+import static Tools.Simu.ventana;
 import static Tools.Time.time;
+import Vista.MenuPrincipal;
 import static Vista.MenuPrincipal.miHilo;
 import static Vista.MenuPrincipal.pos;
 import static Vista.MenuPrincipal.sm;
+import static Vista.MenuPrincipal.timeLeaving;
+import static Vista.MenuPrincipal.timePackaging;
+import static Vista.MenuPrincipal.timeProduction;
+import static Vista.MenuPrincipal.timeStorage;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.HashSet;
-import java.util.Set;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import static java.lang.Thread.State.TERMINATED;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -29,24 +38,59 @@ import javax.swing.JPanel;
  */
 public class Points extends JPanel implements Runnable {
 
+    MenuPrincipal mp = new MenuPrincipal();
     private int x = 0;
     private int y = 0;
     private int dx = 1;
     private int dy = 1;
     public int cant2 = 0;
+    private int timeInv = (timeStorage * 1000) - 10;
+    private int timePro = (timeProduction * 1000) - 10;
+    private int timePack = (timePackaging * 1000) - 10;
+    private int timeExit = (timeLeaving * 1000) - 10;
     public JLabel label1 = new JLabel("Inicio");
     public JLabel label2 = new JLabel("Inventario: " + canInv);
     public JLabel label3 = new JLabel("Producción: " + canPro);
-    public JLabel label4 = new JLabel("Empaquetado: "+ canEmpa);
+    public JLabel label4 = new JLabel("Empaquetado: " + canEmpa);
     public JLabel label5 = new JLabel("Salida: " + canSali);
     public JLabel label6 = new JLabel("Final: " + canFinal);
     public JLabel label7 = new JLabel(time);
+    JButton botonB = new JButton("REGRESAR");
+    JButton botonR = new JButton("REPORTE");
 
     public Points() {
         setLayout(null);
         elementosInicial();
         Thread point = new Thread(this);
         point.start();
+
+        botonB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == botonB) {
+                    if (!point.isAlive()) {
+                        mp.setVisible(true);
+                        ventana.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "HILO ACTIVO, ESPERAR A QUE TERMINE.");
+                    }
+                }
+            }
+        });
+
+        botonR.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == botonR) {
+                    if (!point.isAlive()) {
+                        mp.setVisible(true);
+                        ventana.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "HILO ACTIVO, ESPERAR A QUE TERMINE.");
+                    }
+                }
+            }
+        });
     }
 
     public void elementosInicial() {
@@ -57,6 +101,9 @@ public class Points extends JPanel implements Runnable {
         label5.setBounds(10, 450, 80, 50);
         label6.setBounds(10, 250, 80, 50);
         label7.setBounds(120, 250, 100, 50);
+        botonB.setBounds(40, 520, 110, 25);
+        botonR.setBounds(200, 520, 100, 25);
+
         label1.setFont(new Font("Arial", Font.BOLD, 12));
         label2.setFont(new Font("Arial", Font.BOLD, 12));
         label3.setFont(new Font("Arial", Font.BOLD, 12));
@@ -64,6 +111,9 @@ public class Points extends JPanel implements Runnable {
         label5.setFont(new Font("Arial", Font.BOLD, 12));
         label6.setFont(new Font("Arial", Font.BOLD, 12));
         label7.setFont(new Font("Arial", Font.BOLD, 12));
+        botonB.setFont(new Font("Arial", Font.BOLD, 12));
+        botonR.setFont(new Font("Arial", Font.BOLD, 12));
+
         add(label1);
         add(label2);
         add(label3);
@@ -71,6 +121,8 @@ public class Points extends JPanel implements Runnable {
         add(label5);
         add(label6);
         add(label7);
+        add(botonB);
+        add(botonR);
     }
 
     public void paint(Graphics g) {
@@ -150,7 +202,7 @@ public class Points extends JPanel implements Runnable {
                     Thread.sleep(10);
                     x = x;
                     y = y;
-                    Thread.sleep(4990);
+                    Thread.sleep(timeInv);
                     y = 100;
                     canInv = canInv - 1;
                     label2.setText("Inventario: " + canInv);
@@ -165,15 +217,15 @@ public class Points extends JPanel implements Runnable {
 
                 // 22
                 if (100 < x && x <= 300 && 200 <= y && y < 300) {
-                    canPro +=1;
+                    canPro += 1;
                     label3.setText("Producción: " + canPro);
                     System.out.println("Producción: " + canPro);
                     Thread.sleep(10);
                     x = x;
                     y = y;
-                    Thread.sleep(4990);
+                    Thread.sleep(timePro);
                     y = 300;
-                    canPro -=1;
+                    canPro -= 1;
                     label3.setText("Producción: " + canPro);
                     System.out.println("Producción: " + canPro);
                 }
@@ -186,16 +238,16 @@ public class Points extends JPanel implements Runnable {
 
                 // 42
                 if (200 < x && x <= 300 && 400 <= y && y <= 500) {
-                    canEmpa +=1;
+                    canEmpa += 1;
                     label4.setText("Empaquetado: " + canEmpa);
                     System.out.println("Empaquetado: " + canEmpa);
                     Thread.sleep(10);
                     x = x;
                     y = y;
-                    Thread.sleep(4990);
+                    Thread.sleep(timePack);
                     x = 199;
                     y = 405;
-                    canEmpa -=1;
+                    canEmpa -= 1;
                     label4.setText("Empaquetado: " + canEmpa);
                     System.out.println("Empaquetado: " + canEmpa);
                 }
@@ -208,16 +260,16 @@ public class Points extends JPanel implements Runnable {
 
                 // 40
                 if (0 <= x && x <= 95 && 400 <= y && y <= 500) {
-                    canSali +=1;
+                    canSali += 1;
                     label5.setText("Salida: " + canSali);
                     System.out.println("Salida: " + canSali);
                     Thread.sleep(10);
                     x = x;
                     y = y;
-                    Thread.sleep(4990);
+                    Thread.sleep(timeExit);
                     x = 50;
                     y = 399;
-                    canSali -=1;
+                    canSali -= 1;
                     System.out.println("Salida: " + canSali);
                     label5.setText("Salida: " + canSali);
                 }
@@ -229,26 +281,23 @@ public class Points extends JPanel implements Runnable {
                 }
 
                 // 20
-                if (0 <= x && x <= 100 && 200 <= y && y <= 300) {
-                    canFinal +=1;
+                if (0 <= x && x <= 100 && 275 <= y && y <= 300) {
+                    canFinal += 1;
                     label6.setText("Final: " + canFinal);
                     System.out.println("Final: " + canFinal);
-                    Thread.sleep(15);
                     x = 5;
-                    y = 205;
-                    
+                    y = 250;
+
                 }
 
                 repaint();
-                cant2=canFinal;
-                
-                if(cant2>30 && 30==cant){
-                    desactiveMood=false;
-                    label6.setText("Final: " + 30);
+                if (cant == 30 && canSali == 0 && canEmpa == 0 && canInv == 0 && canPro == 0 && canFinal == 30) {
+                    desactiveMood = false;
+                    label6.setText("Final: " + canFinal);
                     label5.setText("Salida: " + canSali);
                     label4.setText("Empaquetado: " + canEmpa);
                     label2.setText("Inventario: " + canInv);
-                    System.out.println("Cantidad 2: " + cant2);
+                    label3.setText("Producción: " + canPro);
                     System.out.println("Cantidad 1: " + cant);
                 }
             }

@@ -14,7 +14,7 @@ import javax.swing.JLabel;
  * @author fi944
  */
 public class Simu extends Thread {
-
+    public static JFrame ventana = new JFrame("Simulación");
     public Simu() {
     }
 
@@ -28,7 +28,6 @@ public class Simu extends Thread {
     public static int pos = 0;
 
     public void run() {
-        JFrame ventana = new JFrame("Simulación");
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana.setSize(400, 600);
         try {
