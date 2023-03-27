@@ -11,6 +11,7 @@ import static Tools.Simu.canPro;
 import static Tools.Simu.canSali;
 import static Tools.Simu.cant;
 import static Tools.Simu.desactiveMood;
+import static Tools.Simu.total;
 import static Tools.Simu.ventana;
 import static Tools.Time.time;
 import static Tools.Utils.makeReport;
@@ -45,7 +46,7 @@ public class Points extends JPanel implements Runnable {
 
     MenuPrincipal mp = new MenuPrincipal();
     private int x = 0;
-    private int y = 0;
+    private int y = 50;
     private int dx = 1;
     private int dy = 1;
     public int cant2 = 0;
@@ -53,7 +54,7 @@ public class Points extends JPanel implements Runnable {
     private int timePro = (timeProduction * 1000) - 10;
     private int timePack = (timePackaging * 1000) - 10;
     private int timeExit = (timeLeaving * 1000) - 10;
-    public JLabel label1 = new JLabel("Inicio");
+    public JLabel label1 = new JLabel("Inicio: " + total);
     public JLabel label2 = new JLabel("Inventario: " + canInv);
     public JLabel label3 = new JLabel("Producción: " + canPro);
     public JLabel label4 = new JLabel("Empaquetado: " + canEmpa);
@@ -65,6 +66,7 @@ public class Points extends JPanel implements Runnable {
 
     public Points() {
         setLayout(null);
+        setBackground(Color.WHITE);
         elementosInicial();
         Thread point = new Thread(this);
         point.start();
@@ -185,7 +187,7 @@ public class Points extends JPanel implements Runnable {
         if (0 <= x && x <= 100 && y <= 500 && 300 < y) {
             g.setColor(Color.green);
         }
-        g.fillOval(x + pos, y + pos, 10, 10);
+        g.fillOval(x, y, 15, 15);
     }
 
     public void run() {
@@ -193,95 +195,91 @@ public class Points extends JPanel implements Runnable {
             while (desactiveMood) {
                 label7.setText(time);
                 // 00
-
+                
                 if (0 <= x && x < 205 && y <= 100 && 0 <= y) {
                     Thread.sleep(5);
                     x += dx;
                 }
-
+                
+                if( x == 100 && y <= 100 && 0 <= y){
+                    total = 30 - cant;
+                }
+                
                 // 02
                 if (200 < x && x <= 300 && 0 <= y && y < 100) {
                     canInv = canInv + 1;
-                    label2.setText("Inventario: " + canInv);
                     System.out.println("Inventario: " + canInv);
                     Thread.sleep(10);
-                    x = x;
-                    y = y;
+                    x = 250;
+                    y = 50;
                     Thread.sleep(timeInv);
                     y = 100;
                     canInv = canInv - 1;
-                    label2.setText("Inventario: " + canInv);
                     System.out.println("Inventario: " + canInv);
                 }
 
                 // 02 -> 22
                 if (200 <= x && x <= 300 && 100 <= y && y < 200) {
-                    Thread.sleep(5);
+                    Thread.sleep(15);
                     y += dy;
                 }
 
                 // 22
                 if (100 < x && x <= 300 && 200 <= y && y < 300) {
                     canPro += 1;
-                    label3.setText("Producción: " + canPro);
                     System.out.println("Producción: " + canPro);
                     Thread.sleep(10);
-                    x = x;
-                    y = y;
+                    x = 250;
+                    y = 250;
                     Thread.sleep(timePro);
                     y = 300;
                     canPro -= 1;
-                    label3.setText("Producción: " + canPro);
                     System.out.println("Producción: " + canPro);
                 }
 
                 // 22 -> 42
                 if (200 <= x && x <= 300 && 300 <= y && y < 400) {
-                    Thread.sleep(5);
+                    Thread.sleep(15);
                     y += dy;
                 }
 
                 // 42
                 if (200 < x && x <= 300 && 400 <= y && y <= 500) {
                     canEmpa += 1;
-                    label4.setText("Empaquetado: " + canEmpa);
                     System.out.println("Empaquetado: " + canEmpa);
                     Thread.sleep(10);
-                    x = x;
-                    y = y;
+                    x = 250;
+                    y = 405;
                     Thread.sleep(timePack);
                     x = 199;
                     y = 405;
                     canEmpa -= 1;
-                    label4.setText("Empaquetado: " + canEmpa);
                     System.out.println("Empaquetado: " + canEmpa);
                 }
 
                 // 42 -> 40
                 if (95 <= x && x <= 200 && 400 <= y && y <= 500) {
-                    Thread.sleep(5);
+                    Thread.sleep(15);
                     x -= dx;
                 }
 
                 // 40
                 if (0 <= x && x <= 95 && 400 <= y && y <= 500) {
                     canSali += 1;
-                    label5.setText("Salida: " + canSali);
                     System.out.println("Salida: " + canSali);
                     Thread.sleep(10);
-                    x = x;
-                    y = y;
+                    x = 50;
+                    y = 250;
                     Thread.sleep(timeExit);
                     x = 50;
                     y = 399;
                     canSali -= 1;
                     System.out.println("Salida: " + canSali);
-                    label5.setText("Salida: " + canSali);
                 }
 
                 // 40 -> 20
                 if (0 <= x && x <= 100 && 295 < y && y < 400) {
-                    Thread.sleep(5);
+                    Thread.sleep(15);
                     y -= dy;
                 }
 
@@ -294,8 +292,16 @@ public class Points extends JPanel implements Runnable {
                     y = 250;
 
                 }
-
+                
+                label6.setText("Final: " + canFinal);
+                label5.setText("Salida: " + canSali);
+                label4.setText("Empaquetado: " + canEmpa);
+                label2.setText("Inventario: " + canInv);
+                label3.setText("Producción: " + canPro);
+                label1.setText("Inicio: " + total);
+                
                 repaint();
+                
                 if (cant == 30 && canSali == 0 && canEmpa == 0 && canInv == 0 && canPro == 0 && canFinal == 30) {
                     desactiveMood = false;
                     label6.setText("Final: " + canFinal);

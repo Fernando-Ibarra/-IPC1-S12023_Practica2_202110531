@@ -56,7 +56,6 @@ public class Time extends Thread {
                 //System.out.println(time);
             }
         } catch (Exception e) {
-            System.out.println(e);
         }
         time = "00 : 00 : 00";
         System.out.println(time);

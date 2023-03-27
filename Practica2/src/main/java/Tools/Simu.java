@@ -18,6 +18,7 @@ public class Simu extends Thread {
     public Simu() {
     }
 
+    public static int total = 30;
     public static int canInv = 0;
     public static int canPro = 0;
     public static int canEmpa = 0;
@@ -25,7 +26,6 @@ public class Simu extends Thread {
     public static int canFinal = 0;
     public static boolean desactiveMood = true;
     public static int cant = 0;
-    public static int pos = 0;
 
     public void run() {
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,7 +36,6 @@ public class Simu extends Thread {
                 ventana.add(pon);
                 ventana.setVisible(true);
                 cant += 1;
-                pos += 3;
                 Thread.sleep(1000);
             }
         } catch (Exception e) {
